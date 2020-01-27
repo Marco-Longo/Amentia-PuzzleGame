@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
         originalCamRotation = transform.GetChild(0).transform.localRotation;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (axes == RotationAxes.MouseXAndY)
         {
