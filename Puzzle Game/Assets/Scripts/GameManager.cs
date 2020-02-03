@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private int boxPuzzleCompletion = 0;
-    private int boxesCount = 1;
+    private int boxesCount = 3;
  
     void Update()
     {
