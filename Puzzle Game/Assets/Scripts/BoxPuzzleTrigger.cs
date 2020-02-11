@@ -41,7 +41,7 @@ public class BoxPuzzleTrigger : MonoBehaviour
 
             //Apply forces in the correct directions on both the box and the player
             rb.AddForce(-normal * force, ForceMode.Impulse);
-            collision.gameObject.GetComponent<Rigidbody>().AddForce(normal * force/3, ForceMode.Impulse);
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(normal * force/2.5f, ForceMode.Impulse);
 
             /*
             if (normal == transform.forward) //Front Collision

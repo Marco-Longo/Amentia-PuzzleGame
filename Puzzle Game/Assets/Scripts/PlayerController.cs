@@ -26,9 +26,5 @@ public class PlayerController : MonoBehaviour
 
         //Apply the trasnformation to the player GameObject
         transform.Translate(translationX, 0, translationZ);
-
-        //Press Esc to make the cursor reappear
-        if (Input.GetKeyDown("escape"))
-            Cursor.lockState = CursorLockMode.None;
     }
 }
