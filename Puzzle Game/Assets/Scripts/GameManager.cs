@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         pauseMenu.gameObject.SetActive(true);
     }
 
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         pauseMenu.gameObject.SetActive(false);
     }
 
@@ -62,6 +64,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
