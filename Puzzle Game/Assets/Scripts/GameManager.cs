@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         if (boxPuzzleCompletion == boxesCount) //when all 3 boxes are in position...
         {
             Debug.Log("puzzle completed!");
-            //Open the trapdoor
+            //... open the trapdoor
             trapdoorRot.GetComponent<Animator>().SetBool("Open", true);
             trapdoorTrigger.gameObject.SetActive(true);
         }
@@ -34,10 +34,9 @@ public class GameManager : MonoBehaviour
     public void DecreasePuzzleCompletion()
     {
         boxPuzzleCompletion--;
-        if (boxPuzzleCompletion != boxesCount) //when all 3 boxes are in position...
+        if (boxPuzzleCompletion != boxesCount)
         {
             Debug.Log("one or more boxes are not in place");
-            //this can trigger a door opening...
         }
     }
 
