@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -27,5 +28,13 @@ public class PlayerController : MonoBehaviour
 
         //Apply the trasnformation to the player GameObject
         transform.Translate(translationX, 0, translationZ);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Trapdoor"))
+        {
+            SceneManager.LoadScene("Second Floor");
+        }
     }
 }

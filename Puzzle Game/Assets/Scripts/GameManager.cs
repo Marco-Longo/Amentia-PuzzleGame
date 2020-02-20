@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public RectTransform pauseMenu;
+    public GameObject trapdoorRot;
+    public GameObject trapdoorTrigger;
 
     private int boxPuzzleCompletion = 0;
     private int boxesCount = 3;
@@ -23,7 +25,9 @@ public class GameManager : MonoBehaviour
         if (boxPuzzleCompletion == boxesCount) //when all 3 boxes are in position...
         {
             Debug.Log("puzzle completed!");
-            //this can trigger a door opening...
+            //Open the trapdoor
+            trapdoorRot.GetComponent<Animator>().SetBool("Open", true);
+            trapdoorTrigger.gameObject.SetActive(true);
         }
     }
 
