@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
         if (other.moveDirection.y < -0.3f)
             return;
 
+        //From Character to Box
         Vector3 direction = (other.gameObject.transform.position - transform.position).normalized;
         Ray ray = new Ray(transform.position, direction);
         RaycastHit hit;
@@ -90,7 +91,21 @@ public class PlayerController : MonoBehaviour
         Vector3 normal = hit.normal;
         normal.y = 0.0f;
 
-        // Apply the push
-        body.velocity = pushPower * -normal;
+        //From Box to Character
+        Vector3 direction2 = (transform.position - other.gameObject.transform.position).normalized;
+        Ray ray2 = new Ray(other.gameObject.transform.position, direction2);
+        RaycastHit hit2;
+        Physics.Raycast(ray2, out hit2);
+        Vector3 normal2 = hit2.normal;
+        normal2.y = 0.0f;
+
+        // Apply the push if character is facing forward
+        if ((Mathf.Abs(normal2.x - transform.forward.x) < 0.2f) && (Mathf.Abs(normal2.z - transform.forward.z) < 0.2f))
+        {
+            //Assist Player Movement
+            //...
+
+            body.velocity = pushPower * -normal;
+        }
     }
 }
