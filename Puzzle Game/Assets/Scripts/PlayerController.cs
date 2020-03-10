@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     private CharacterController controller;
+    private GameObject gm;
 
     public float speed = 10.0f;
     public float gravity = 20.0f;
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         controller = GetComponent<CharacterController>();
+        gm = GameObject.Find("GameManager");
     }
 
     void Update()
@@ -51,6 +53,22 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Trapdoor"))
         {
             SceneManager.LoadScene("Second Floor");
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Monster"))
+        {
+            gm.GetComponent<GameManager>().IncreaseInsanity(0.001f);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Monster"))
+        {
+            gm.GetComponent<GameManager>().InsanityDecay();
         }
     }
 

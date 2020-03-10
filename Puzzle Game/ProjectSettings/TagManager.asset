@@ -6,6 +6,7 @@ TagManager:
   tags:
   - boxPuzzleTrigger
   - Trapdoor
+  - Monster
   layers:
   - Default
   - TransparentFX
