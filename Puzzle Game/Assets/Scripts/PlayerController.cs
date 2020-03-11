@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     private CharacterController controller;
     private GameObject gm;
+    private AudioSource footstepsSFX;
 
     public float speed = 10.0f;
     public float gravity = 20.0f;
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
 
         controller = GetComponent<CharacterController>();
         gm = GameObject.Find("GameManager");
+        footstepsSFX = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -46,6 +48,16 @@ public class PlayerController : MonoBehaviour
 
         // Apply Movement to Player
         controller.Move(distance);
+
+        //Play Footsteps SFX
+        if (controller.velocity.magnitude > 2.0f && !footstepsSFX.isPlaying)
+        {
+            footstepsSFX.volume = Random.Range(0.8f, 1.0f);
+            footstepsSFX.pitch = Random.Range(0.8f, 1.1f);
+            footstepsSFX.Play();
+        }
+        else if (controller.velocity.magnitude < 2.0f && footstepsSFX.isPlaying)
+            footstepsSFX.Stop();
     }
 
     private void OnTriggerEnter(Collider other)

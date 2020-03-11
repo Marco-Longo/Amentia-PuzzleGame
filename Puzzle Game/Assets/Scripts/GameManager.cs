@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
         {
             //... open the trapdoor
             trapdoorRot.GetComponent<Animator>().SetBool("Open", true);
+            trapdoorRot.GetComponent<AudioSource>().Play();
             trapdoorTrigger.gameObject.SetActive(true);
         }
     }

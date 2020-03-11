@@ -5,6 +5,22 @@ using UnityEngine;
 public class BoxPuzzleTrigger : MonoBehaviour
 {
     public GameObject gm;
+    private AudioSource boxSlideSFX;
+    private Rigidbody boxRB;
+
+    private void Start()
+    {
+        boxSlideSFX = GetComponent<AudioSource>();
+        boxRB = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        if (boxRB.velocity.magnitude > 2.0f && !boxSlideSFX.isPlaying)
+            boxSlideSFX.Play();
+        else if (boxRB.velocity.magnitude < 2.0f && boxSlideSFX.isPlaying)
+            boxSlideSFX.Stop();
+    }
 
     void OnTriggerEnter(Collider other)
     {
