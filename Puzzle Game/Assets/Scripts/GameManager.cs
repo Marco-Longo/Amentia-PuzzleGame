@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public RectTransform pauseMenu;
     public GameObject trapdoorRot;
     public GameObject trapdoorTrigger;
+    public GameObject fakeWall;
+    public GameObject realDoor;
     public Slider insanityMeter;
 
     //Box Puzzle
@@ -56,6 +58,15 @@ public class GameManager : MonoBehaviour
             insanity += amount;
             decayTimer = 0.0f;
             insanityMeter.value = insanity;
+        }
+        if (insanity > 0.75f && !realDoor.activeInHierarchy)
+        {
+            realDoor.SetActive(true);
+            Color c = realDoor.GetComponent<MeshRenderer>().material.color;
+            c.a = 0.0f;
+            realDoor.GetComponent<MeshRenderer>().material.color = c;
+            realDoor.GetComponent<Animator>().SetBool("Insane", true);
+            fakeWall.SetActive(false);
         }
     }
     private void DecreaseInsanity()

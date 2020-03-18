@@ -120,4 +120,11 @@ public class PlayerController : MonoBehaviour
             body.velocity = pushPower * -normal;
         }
     }
+
+    public void SetPosition(Vector3 val)
+    {
+        controller.enabled = false;
+        controller.transform.position = val;
+        controller.enabled = true;
+    }
 }
