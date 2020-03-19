@@ -21,7 +21,13 @@ public class GameManager : MonoBehaviour
     private float insanity = 0.0f;
     private float decayTimer = 0.0f;
     private bool inDanger = false;
- 
+
+    private void Awake()
+    {
+        if (!AudioManager.Instance.GetComponent<AudioSource>().isPlaying)
+            AudioManager.Instance.GetComponent<AudioSource>().Play();
+    }
+
     void Update()
     {
         decayTimer += Time.deltaTime;
@@ -98,6 +104,7 @@ public class GameManager : MonoBehaviour
     public void QuitGame()
     {
         Time.timeScale = 1;
+        AudioManager.Instance.GetComponent<AudioSource>().Stop();
         SceneManager.LoadScene("MainMenu");
     }
     public void RestartLevel()

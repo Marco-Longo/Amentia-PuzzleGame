@@ -16,10 +16,15 @@ public class BoxPuzzleTrigger : MonoBehaviour
 
     private void Update()
     {
-        if (boxRB.velocity.magnitude > 2.0f && !boxSlideSFX.isPlaying)
-            boxSlideSFX.Play();
-        else if (boxRB.velocity.magnitude < 2.0f && boxSlideSFX.isPlaying)
-            boxSlideSFX.Stop();
+        if (Time.timeScale == 0) //Game is paused
+            boxSlideSFX.Pause();
+        else
+        {
+            if (boxRB.velocity.magnitude > 2.0f && !boxSlideSFX.isPlaying)
+                boxSlideSFX.Play();
+            else if (boxRB.velocity.magnitude < 2.0f && boxSlideSFX.isPlaying)
+                boxSlideSFX.Stop();
+        }
     }
 
     void OnTriggerEnter(Collider other)
