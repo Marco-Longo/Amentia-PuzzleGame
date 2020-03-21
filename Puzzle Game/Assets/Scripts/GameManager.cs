@@ -67,12 +67,12 @@ public class GameManager : MonoBehaviour
         }
         if (insanity > 0.75f && !realDoor.activeInHierarchy)
         {
+            fakeWall.GetComponent<Animator>().SetBool("Insane", true);
             realDoor.SetActive(true);
             Color c = realDoor.GetComponent<MeshRenderer>().material.color;
             c.a = 0.0f;
             realDoor.GetComponent<MeshRenderer>().material.color = c;
             realDoor.GetComponent<Animator>().SetBool("Insane", true);
-            fakeWall.SetActive(false);
         }
     }
     private void DecreaseInsanity()

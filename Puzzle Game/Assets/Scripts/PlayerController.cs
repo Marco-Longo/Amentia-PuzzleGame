@@ -33,8 +33,8 @@ public class PlayerController : MonoBehaviour
             speed /= 2.0f;
 
         // Get Horizontal and Vertical Input
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
 
         // Calculate the Direction to Move based on the tranform of the Player
         Vector3 moveDirectionForward = transform.forward * verticalInput;
