@@ -121,6 +121,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public Vector3 GetPosition()
+    {
+        return controller.transform.position;
+    }
     public void SetPosition(Vector3 val)
     {
         controller.enabled = false;
