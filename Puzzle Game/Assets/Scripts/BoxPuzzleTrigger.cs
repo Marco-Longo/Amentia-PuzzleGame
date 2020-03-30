@@ -11,6 +11,7 @@ public class BoxPuzzleTrigger : MonoBehaviour
     private void Start()
     {
         boxSlideSFX = GetComponent<AudioSource>();
+        boxSlideSFX.volume *= PlayerPrefs.GetFloat("SOUND");
         boxRB = GetComponent<Rigidbody>();
     }
 

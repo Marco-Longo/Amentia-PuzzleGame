@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     {
         if (!AudioManager.Instance.GetComponent<AudioSource>().isPlaying)
             AudioManager.Instance.GetComponent<AudioSource>().Play();
+        AudioManager.Instance.GetComponent<AudioSource>().volume *= PlayerPrefs.GetFloat("MUSIC");
     }
 
     void Update()
@@ -46,6 +47,7 @@ public class GameManager : MonoBehaviour
         {
             //... open the trapdoor
             trapdoorRot.GetComponent<Animator>().SetBool("Open", true);
+            trapdoorRot.GetComponent<AudioSource>().volume *= PlayerPrefs.GetFloat("SOUND");
             trapdoorRot.GetComponent<AudioSource>().Play();
             trapdoorTrigger.gameObject.SetActive(true);
         }

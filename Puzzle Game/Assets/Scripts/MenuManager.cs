@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
     //public AudioClip buttonClick;
-    //private AudioSource audioSource;
+    public AudioSource audioSource;
     public RectTransform mainMenu;
     public RectTransform controlsMenu;
     public RectTransform optionsMenu;
+    public Slider musicSlider;
+    public Slider soundSlider;
 
     private void Awake()
     {
@@ -19,7 +22,48 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
-        //audioSource = gameObject.GetComponent<AudioSource>();
+        if (PlayerPrefs.GetFloat("MUSIC", -1) == -1) //No music preferences
+        {
+            musicSlider.value = 1;
+            audioSource.volume = 1;
+            PlayerPrefs.SetFloat("MUSIC", 1.0f);
+        }
+        else
+        {
+            musicSlider.value = PlayerPrefs.GetFloat("MUSIC");
+            audioSource.volume = musicSlider.value;
+        }
+        if (PlayerPrefs.GetFloat("SOUND", -1) == -1) //No sound preferences
+        {
+            soundSlider.value = 1;
+            PlayerPrefs.SetFloat("SOUND", 1.0f);
+        }
+        else
+        {
+            soundSlider.value = PlayerPrefs.GetFloat("SOUND");
+        }
+        PlayerPrefs.Save();
+    }
+
+    public void ChangeMusicVolume()
+    {
+        float musicVolume = musicSlider.value;
+        if (PlayerPrefs.GetFloat("MUSIC") != musicVolume)
+        {
+            PlayerPrefs.SetFloat("MUSIC", musicVolume);
+            PlayerPrefs.Save();
+            audioSource.volume = musicVolume;
+        }
+    }
+
+    public void ChangeSoundVolume()
+    {
+        float soundVolume = soundSlider.value;
+        if (PlayerPrefs.GetFloat("SOUND") != soundVolume)
+        {
+            PlayerPrefs.SetFloat("SOUND", soundVolume);
+            PlayerPrefs.Save();
+        }
     }
 
     //Load the first level of the game

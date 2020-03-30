@@ -770,10 +770,21 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1392191084}
+        m_MethodName: ChangeMusicVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &152664249
 GameObject:
   m_ObjectHideFlags: 0
@@ -2470,9 +2481,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18b5f646e801971479c1be855617082c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 2074032344}
   mainMenu: {fileID: 123138207}
   controlsMenu: {fileID: 325479881}
   optionsMenu: {fileID: 12380408}
+  musicSlider: {fileID: 138818476}
+  soundSlider: {fileID: 1690451859}
 --- !u!4 &1392191085
 Transform:
   m_ObjectHideFlags: 0
@@ -3205,7 +3219,18 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1392191084}
+        m_MethodName: ChangeSoundVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1704994688
 GameObject:
   m_ObjectHideFlags: 0

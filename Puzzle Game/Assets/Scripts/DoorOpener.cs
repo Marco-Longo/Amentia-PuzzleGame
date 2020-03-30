@@ -14,6 +14,7 @@ public class DoorOpener : MonoBehaviour
     {
         anim = transform.GetChild(0).GetComponent<Animator>();
         doorSFX = GetComponent<AudioSource>();
+        doorSFX.volume *= PlayerPrefs.GetFloat("SOUND");
     }
 
     private void OnTriggerEnter(Collider other)
