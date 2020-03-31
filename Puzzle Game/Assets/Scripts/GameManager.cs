@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject fakeWall;
     public GameObject realDoor;
     public Slider insanityMeter;
+    public Image insanityEffect;
 
     //Box Puzzle
     private int boxPuzzleCompletion = 0;
@@ -19,8 +20,8 @@ public class GameManager : MonoBehaviour
 
     //Monster Insanity
     private float insanity = 0.0f;
-    private float decayTimer = 0.0f;
-    private bool inDanger = false;
+//  private float decayTimer = 0.0f;
+//  private bool inDanger = false;
 
     private void Awake()
     {
@@ -31,12 +32,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        decayTimer += Time.deltaTime;
+//      decayTimer += Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.Escape))
             OpenMenu();
-        if (!inDanger && insanity > 0.0f && decayTimer > 3.0f)
-            DecreaseInsanity();
+//      if (!inDanger && insanity > 0.0f && decayTimer > 3.0f)
+//          DecreaseInsanity();
     }
 
     //Box Puzzle Functions
@@ -62,10 +63,11 @@ public class GameManager : MonoBehaviour
     {
         if (insanity < 1.0f)
         {
-            inDanger = true;
+//          inDanger = true;
+//          decayTimer = 0.0f;
             insanity += amount;
-            decayTimer = 0.0f;
             insanityMeter.value = insanity;
+            insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity - 0.2f);
         }
         if (insanity > 0.75f && !realDoor.activeInHierarchy)
         {
@@ -79,14 +81,17 @@ public class GameManager : MonoBehaviour
     }
     private void DecreaseInsanity()
     {
+//      decayTimer = 0.0f;
         insanity -= 0.05f;
-        decayTimer = 0.0f;
         insanityMeter.value = insanity;
     }
+
+    /*
     public void InsanityDecay()
     {
         inDanger = false;
     }
+    */
 
     //Pause Menu Functions
     public void OpenMenu()

@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /*
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Monster"))
@@ -83,6 +84,7 @@ public class PlayerController : MonoBehaviour
             gm.GetComponent<GameManager>().InsanityDecay();
         }
     }
+    */
 
     private void OnControllerColliderHit(ControllerColliderHit other)
     {
