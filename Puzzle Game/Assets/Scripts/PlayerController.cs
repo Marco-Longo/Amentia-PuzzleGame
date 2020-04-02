@@ -64,6 +64,9 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Trapdoor"))
         {
+            //Save your progress
+            PlayerPrefs.SetInt("INDEX", 2);
+            PlayerPrefs.Save();
             SceneManager.LoadScene("Second Floor");
         }
     }

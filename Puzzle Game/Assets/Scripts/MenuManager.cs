@@ -18,6 +18,8 @@ public class MenuManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        if (PlayerPrefs.GetInt("INDEX", -1) == -1)
+            mainMenu.GetChild(1).GetComponent<Button>().interactable = false;
     }
 
     void Start()
@@ -70,7 +72,20 @@ public class MenuManager : MonoBehaviour
     public void LoadGame()
     {
         //audioSource.PlayOneShot(buttonClick);
+        PlayerPrefs.SetInt("INDEX", 1);
+        PlayerPrefs.Save();
         SceneManager.LoadScene("First Floor");
+    }
+
+    public void ContinueGame()
+    {
+        //audioSource.PlayOneShot(buttonClick);
+        int sceneIdx = PlayerPrefs.GetInt("INDEX", -1);
+
+        if (sceneIdx > 0)
+            SceneManager.LoadScene(sceneIdx);
+        else
+            SceneManager.LoadScene("First Floor");
     }
 
     //Load the controls tab in the main menu

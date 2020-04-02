@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject trapdoorTrigger;
     public GameObject fakeWall;
     public GameObject realDoor;
+    public GameObject musicManagerLev2;
     public Slider insanityMeter;
     public Image insanityEffect;
 
@@ -25,9 +26,12 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (!AudioManager.Instance.GetComponent<AudioSource>().isPlaying)
-            AudioManager.Instance.GetComponent<AudioSource>().Play();
-        AudioManager.Instance.GetComponent<AudioSource>().volume *= PlayerPrefs.GetFloat("MUSIC");
+        if (AudioManager.Instance != null)
+        {
+            if (!AudioManager.Instance.GetComponent<AudioSource>().isPlaying)
+                AudioManager.Instance.GetComponent<AudioSource>().Play();
+            AudioManager.Instance.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("MUSIC");
+        }
     }
 
     void Update()
