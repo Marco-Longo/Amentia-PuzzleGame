@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,7 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject trapdoorTrigger;
     public GameObject fakeWall;
     public GameObject realDoor;
-    public GameObject musicManagerLev2;
+    public GameObject finalDoor;
     public Slider insanityMeter;
     public Image insanityEffect;
 
@@ -19,7 +20,7 @@ public class GameManager : MonoBehaviour
     private int boxPuzzleCompletion = 0;
     private int boxesCount = 3;
 
-    //Monster Insanity
+    //Insanity Variables
     private float insanity = 0.0f;
 //  private float decayTimer = 0.0f;
 //  private bool inDanger = false;
@@ -83,6 +84,36 @@ public class GameManager : MonoBehaviour
             realDoor.GetComponent<Animator>().SetBool("Insane", true);
         }
     }
+
+    //Cages Insanity Functions
+    public void IncreaseInsanityCages(float amount)
+    {
+        insanity += amount;
+        insanityMeter.value = insanity;
+        insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity - 0.2f);
+
+        /*
+        if (insanity > .9f) //if insanity is too high reset level
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        */
+        //Activate the door when a certain amount of insanity is reached
+        if (insanity > 0.35f && insanity < 0.45f)
+            finalDoor.SetActive(false);
+        else
+            finalDoor.SetActive(true);
+    }
+
+    public void ResetInsanity()
+    {
+        //Flowers set insanity to 0 and close the door
+        insanity = 0.0f;
+        insanityMeter.value = insanity;
+        insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, 0.0f);
+        finalDoor.SetActive(true);
+    }
+
     private void DecreaseInsanity()
     {
 //      decayTimer = 0.0f;

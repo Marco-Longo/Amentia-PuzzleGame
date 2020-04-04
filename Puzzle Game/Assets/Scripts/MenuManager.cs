@@ -35,6 +35,7 @@ public class MenuManager : MonoBehaviour
             musicSlider.value = PlayerPrefs.GetFloat("MUSIC");
             audioSource.volume = musicSlider.value;
         }
+
         if (PlayerPrefs.GetFloat("SOUND", -1) == -1) //No sound preferences
         {
             soundSlider.value = 1;

@@ -8,6 +8,11 @@ TagManager:
   - Trapdoor
   - Monster
   - Teleport
+  - Cages
+  - Flowers
+  - Controller1
+  - Controller2
+  - Controller3
   layers:
   - Default
   - TransparentFX

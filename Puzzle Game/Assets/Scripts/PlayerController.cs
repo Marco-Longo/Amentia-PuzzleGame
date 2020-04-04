@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private GameObject gm;
     private AudioSource footstepsSFX;
+    private GameObject lvr;
+    private GameObject lvr2;
+    private GameObject lvr3;
 
     public float speed = 10.0f;
     public float gravity = 20.0f;
@@ -20,8 +23,11 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         controller = GetComponent<CharacterController>();
-        gm = GameObject.Find("GameManager");
         footstepsSFX = GetComponent<AudioSource>();
+        gm = GameObject.Find("GameManager");
+        lvr = GameObject.Find("Lever1");
+        lvr2 = GameObject.Find("Lever2");
+        lvr3 = GameObject.Find("Lever3");   
     }
 
     void Update()
@@ -64,10 +70,19 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Trapdoor"))
         {
-            //Save your progress
+            //Save progress
             PlayerPrefs.SetInt("INDEX", 2);
             PlayerPrefs.Save();
             SceneManager.LoadScene("Second Floor");
+        }
+        else if (other.gameObject.CompareTag("Cages")) //Level 3 insanity increase
+        {
+            gm.GetComponent<GameManager>().IncreaseInsanityCages(0.2f);
+        }
+        else if (other.gameObject.CompareTag("Flowers")) //Level 3 flowers insanity/colliders reset
+        {
+            gm.GetComponent<GameManager>().ResetInsanity();
+            lvr.GetComponent<Lever>().Reset(true);
         }
     }
 
@@ -77,17 +92,31 @@ public class PlayerController : MonoBehaviour
         {
             gm.GetComponent<GameManager>().IncreaseInsanity(0.001f);
         }
-    }
-
-    /*
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Monster"))
+    
+        //When in the correct lever collider activate its effects on Cages
+        if (other.gameObject.CompareTag("Controller1"))
         {
-            gm.GetComponent<GameManager>().InsanityDecay();
+            lvr.GetComponent<Lever>().Controller1(true);
+        }
+        if (other.gameObject.CompareTag("Controller2"))
+        {
+            lvr2.GetComponent<Lever2>().Controller2(true);
+        }
+        if (other.gameObject.CompareTag("Controller3"))
+        {
+            lvr3.GetComponent<Lever3>().Controller3(true);
         }
     }
-    */
+
+ /*
+ private void OnTriggerExit(Collider other)
+ {
+     if (other.gameObject.CompareTag("Monster"))
+     {
+         gm.GetComponent<GameManager>().InsanityDecay();
+     }
+ }
+ */
 
     private void OnControllerColliderHit(ControllerColliderHit other)
     {
@@ -137,3 +166,4 @@ public class PlayerController : MonoBehaviour
         controller.enabled = true;
     }
 }
+
