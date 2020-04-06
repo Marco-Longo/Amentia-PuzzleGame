@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     private int boxesCount = 3;
 
     //Insanity Variables
-    private float insanity = 0.0f;
+    private static float insanity = 0.0f;
 //  private float decayTimer = 0.0f;
 //  private bool inDanger = false;
 
@@ -33,14 +33,16 @@ public class GameManager : MonoBehaviour
                 AudioManager.Instance.GetComponent<AudioSource>().Play();
             AudioManager.Instance.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("MUSIC");
         }
+        insanityMeter.value = insanity;
+        insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity - 0.2f);
     }
 
     void Update()
     {
-//      decayTimer += Time.deltaTime;
-
         if (Input.GetKeyDown(KeyCode.Escape))
             OpenMenu();
+
+//      decayTimer += Time.deltaTime;
 //      if (!inDanger && insanity > 0.0f && decayTimer > 3.0f)
 //          DecreaseInsanity();
     }
@@ -74,15 +76,23 @@ public class GameManager : MonoBehaviour
             insanityMeter.value = insanity;
             insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity - 0.2f);
         }
-        if (insanity > 0.75f && !realDoor.activeInHierarchy)
+        if (insanity > 0.5f && !realDoor.activeInHierarchy)
         {
             fakeWall.GetComponent<Animator>().SetBool("Insane", true);
-            realDoor.SetActive(true);
-            Color c = realDoor.GetComponent<MeshRenderer>().material.color;
-            c.a = 0.0f;
-            realDoor.GetComponent<MeshRenderer>().material.color = c;
-            realDoor.GetComponent<Animator>().SetBool("Insane", true);
+            StartCoroutine(DoorFadeIn());
         }
+    }
+
+    private IEnumerator DoorFadeIn()
+    {
+        realDoor.SetActive(true);
+        Color c = realDoor.GetComponent<MeshRenderer>().material.color;
+        c.a = 0.0f;
+        realDoor.GetComponent<MeshRenderer>().material.color = c;
+        realDoor.GetComponent<Animator>().SetBool("Insane", true);
+
+        yield return new WaitForSeconds(4.0f);
+        realDoor.GetComponent<BoxCollider>().enabled = true;
     }
 
     //Cages Insanity Functions
@@ -146,12 +156,14 @@ public class GameManager : MonoBehaviour
     public void QuitGame()
     {
         Time.timeScale = 1;
+        insanity = 0; //Since insanity is a static variable, it needs to be reset at every restart
         AudioManager.Instance.GetComponent<AudioSource>().Stop();
         SceneManager.LoadScene("MainMenu");
     }
     public void RestartLevel()
     {
         Time.timeScale = 1;
+        insanity = 0; //Since insanity is a static variable, it needs to be reset at every restart
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

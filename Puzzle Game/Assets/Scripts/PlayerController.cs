@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    private bool movementEnabled = true;
     private CharacterController controller;
     private GameObject gm;
     private AudioSource footstepsSFX;
@@ -15,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 10.0f;
     public float gravity = 20.0f;
     public float pushPower = 4.0f;
+    public Image screenFade;
 
     void Start()
     {
@@ -38,42 +41,52 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftShift))
             speed /= 2.0f;
 
-        // Get Horizontal and Vertical Input
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
-
-        // Calculate the Direction to Move based on the tranform of the Player
-        Vector3 moveDirectionForward = transform.forward * verticalInput;
-        Vector3 moveDirectionSide = transform.right * horizontalInput;
-
-        //find the direction
-        Vector3 direction = (moveDirectionForward + moveDirectionSide).normalized;
-        //find the distance
-        Vector3 distance = direction * speed * Time.deltaTime;
-        distance.y -= gravity * Time.deltaTime;
-
-        // Apply Movement to Player
-        controller.Move(distance);
-
-        //Play Footsteps SFX
-        if (controller.velocity.magnitude > 2.0f && !footstepsSFX.isPlaying)
+        if (movementEnabled)
         {
-            footstepsSFX.volume = Random.Range(0.8f, 1.0f);
-            footstepsSFX.pitch = Random.Range(0.8f, 1.1f);
-            footstepsSFX.Play();
+            // Get Horizontal and Vertical Input
+            float horizontalInput = Input.GetAxisRaw("Horizontal");
+            float verticalInput = Input.GetAxisRaw("Vertical");
+
+            // Calculate the Direction to Move based on the tranform of the Player
+            Vector3 moveDirectionForward = transform.forward * verticalInput;
+            Vector3 moveDirectionSide = transform.right * horizontalInput;
+
+            //find the direction
+            Vector3 direction = (moveDirectionForward + moveDirectionSide).normalized;
+            //find the distance
+            Vector3 distance = direction * speed * Time.deltaTime;
+            distance.y -= gravity * Time.deltaTime;
+
+            // Apply Movement to Player
+            controller.Move(distance);
+
+            //Play Footsteps SFX
+            if (controller.velocity.magnitude > 2.0f && !footstepsSFX.isPlaying)
+            {
+                footstepsSFX.volume = Random.Range(0.8f, 1.0f);
+                footstepsSFX.pitch = Random.Range(0.8f, 1.1f);
+                footstepsSFX.Play();
+            }
+            else if (controller.velocity.magnitude < 2.0f && footstepsSFX.isPlaying)
+                footstepsSFX.Stop();
         }
-        else if (controller.velocity.magnitude < 2.0f && footstepsSFX.isPlaying)
-            footstepsSFX.Stop();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Trapdoor"))
+        if (other.gameObject.CompareTag("Trapdoor")) //First floor cleared
         {
             //Save progress
             PlayerPrefs.SetInt("INDEX", 2);
             PlayerPrefs.Save();
             SceneManager.LoadScene("Second Floor");
+        }
+        else if (other.gameObject.CompareTag("FadeInDoor")) //Second floor cleared
+        {
+            //Save progress
+            PlayerPrefs.SetInt("INDEX", 3);
+            PlayerPrefs.Save();
+            screenFade.GetComponent<ScreenFade>().FadeOut(3);
         }
         else if (other.gameObject.CompareTag("Cages")) //Level 3 insanity increase
         {
@@ -108,15 +121,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
- /*
- private void OnTriggerExit(Collider other)
- {
-     if (other.gameObject.CompareTag("Monster"))
-     {
-         gm.GetComponent<GameManager>().InsanityDecay();
-     }
- }
- */
+    /*
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Monster"))
+        {
+            gm.GetComponent<GameManager>().InsanityDecay();
+        }
+    }
+    */
 
     private void OnControllerColliderHit(ControllerColliderHit other)
     {
@@ -165,5 +178,10 @@ public class PlayerController : MonoBehaviour
         controller.transform.position = val;
         controller.enabled = true;
     }
+    public void EnableMovement(bool move)
+    {
+        if (move == false)
+            footstepsSFX.Stop();
+        movementEnabled = move;
+    }
 }
-
