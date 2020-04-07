@@ -6,44 +6,51 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    //public AudioClip buttonClick;
-    public AudioSource audioSource;
     public RectTransform mainMenu;
     public RectTransform controlsMenu;
     public RectTransform optionsMenu;
     public Slider musicSlider;
     public Slider soundSlider;
 
+    private AudioSource soundSource;
+    public AudioSource musicSource;
+    public AudioClip menuSelect;
+    public AudioClip menuMovement;
+
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        soundSource = GetComponent<AudioSource>();
         if (PlayerPrefs.GetInt("INDEX", -1) == -1)
             mainMenu.GetChild(1).GetComponent<Button>().interactable = false;
     }
 
     void Start()
     {
+        //Check music settings
         if (PlayerPrefs.GetFloat("MUSIC", -1) == -1) //No music preferences
         {
             musicSlider.value = 1;
-            audioSource.volume = 1;
+            musicSource.volume = 1;
             PlayerPrefs.SetFloat("MUSIC", 1.0f);
         }
         else
         {
             musicSlider.value = PlayerPrefs.GetFloat("MUSIC");
-            audioSource.volume = musicSlider.value;
+            musicSource.volume = musicSlider.value;
         }
-
+        //Check sound settings
         if (PlayerPrefs.GetFloat("SOUND", -1) == -1) //No sound preferences
         {
             soundSlider.value = 1;
+            soundSource.volume = 1;
             PlayerPrefs.SetFloat("SOUND", 1.0f);
         }
         else
         {
             soundSlider.value = PlayerPrefs.GetFloat("SOUND");
+            soundSource.volume = soundSlider.value;
         }
         PlayerPrefs.Save();
     }
@@ -55,7 +62,7 @@ public class MenuManager : MonoBehaviour
         {
             PlayerPrefs.SetFloat("MUSIC", musicVolume);
             PlayerPrefs.Save();
-            audioSource.volume = musicVolume;
+            musicSource.volume = musicVolume;
         }
     }
 
@@ -66,13 +73,14 @@ public class MenuManager : MonoBehaviour
         {
             PlayerPrefs.SetFloat("SOUND", soundVolume);
             PlayerPrefs.Save();
+            soundSource.volume = soundVolume;
         }
     }
 
     //Load the first level of the game
     public void LoadGame()
     {
-        //audioSource.PlayOneShot(buttonClick);
+        soundSource.PlayOneShot(menuSelect);
         PlayerPrefs.SetInt("INDEX", 1);
         PlayerPrefs.Save();
         SceneManager.LoadScene("First Floor");
@@ -80,7 +88,7 @@ public class MenuManager : MonoBehaviour
 
     public void ContinueGame()
     {
-        //audioSource.PlayOneShot(buttonClick);
+        soundSource.PlayOneShot(menuSelect);
         int sceneIdx = PlayerPrefs.GetInt("INDEX", -1);
 
         if (sceneIdx > 0)
@@ -92,7 +100,7 @@ public class MenuManager : MonoBehaviour
     //Load the controls tab in the main menu
     public void ShowControls()
     {
-        //audioSource.PlayOneShot(buttonClick);
+        soundSource.PlayOneShot(menuSelect);
         mainMenu.gameObject.SetActive(false);
         controlsMenu.gameObject.SetActive(true);
     }
@@ -100,7 +108,7 @@ public class MenuManager : MonoBehaviour
     //Load the options tab in the main menu
     public void ShowOptions()
     {
-        //audioSource.PlayOneShot(buttonClick);
+        soundSource.PlayOneShot(menuSelect);
         mainMenu.gameObject.SetActive(false);
         optionsMenu.gameObject.SetActive(true);
     }
@@ -108,7 +116,7 @@ public class MenuManager : MonoBehaviour
     //Load the main menu screen
     public void ShowMenu()
     {
-        //audioSource.PlayOneShot(buttonClick);
+        soundSource.PlayOneShot(menuMovement);
         controlsMenu.gameObject.SetActive(false);
         optionsMenu.gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(true);
@@ -116,7 +124,7 @@ public class MenuManager : MonoBehaviour
 
     public void ExitGame()
     {
-        //audioSource.PlayOneShot(buttonClick);
+        soundSource.PlayOneShot(menuMovement);
 #if !UNITY_EDITOR
         Application.Quit();
 #endif

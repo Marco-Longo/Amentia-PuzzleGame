@@ -25,16 +25,26 @@ public class GameManager : MonoBehaviour
 //  private float decayTimer = 0.0f;
 //  private bool inDanger = false;
 
+    //Sound Effects
+    public AudioSource soundSource;
+    public AudioClip menuSelect;
+    public AudioClip menuMovement;
+    public AudioClip landingSound;
+
     private void Awake()
     {
+        //Initialize music and sound
         if (AudioManager.Instance != null)
         {
             if (!AudioManager.Instance.GetComponent<AudioSource>().isPlaying)
                 AudioManager.Instance.GetComponent<AudioSource>().Play();
             AudioManager.Instance.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("MUSIC");
         }
+        soundSource.volume = PlayerPrefs.GetFloat("SOUND");
+        
+        //Initialize insanity indicators
         insanityMeter.value = insanity;
-        insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity - 0.2f);
+        insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity - 0.2f);   
     }
 
     void Update()
@@ -138,9 +148,15 @@ public class GameManager : MonoBehaviour
     }
     */
 
+    public void PlayLandingSound()
+    {
+        soundSource.PlayOneShot(landingSound);
+    }
+
     //Pause Menu Functions
     public void OpenMenu()
     {
+        soundSource.PlayOneShot(menuMovement);
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -148,6 +164,7 @@ public class GameManager : MonoBehaviour
     }
     public void ResumeGame()
     {
+        soundSource.PlayOneShot(menuSelect);
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -155,6 +172,7 @@ public class GameManager : MonoBehaviour
     }
     public void QuitGame()
     {
+        soundSource.PlayOneShot(menuMovement);
         Time.timeScale = 1;
         insanity = 0; //Since insanity is a static variable, it needs to be reset at every restart
         AudioManager.Instance.GetComponent<AudioSource>().Stop();
@@ -162,6 +180,7 @@ public class GameManager : MonoBehaviour
     }
     public void RestartLevel()
     {
+        soundSource.PlayOneShot(menuSelect);
         Time.timeScale = 1;
         insanity = 0; //Since insanity is a static variable, it needs to be reset at every restart
         Cursor.lockState = CursorLockMode.Locked;

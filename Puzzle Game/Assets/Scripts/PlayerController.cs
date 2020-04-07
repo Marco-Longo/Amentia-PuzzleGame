@@ -17,7 +17,10 @@ public class PlayerController : MonoBehaviour
     public float speed = 10.0f;
     public float gravity = 20.0f;
     public float pushPower = 4.0f;
+
     public Image screenFade;
+    public AudioClip walkSFX;
+    public AudioClip runSFX;
 
     void Start()
     {
@@ -37,9 +40,15 @@ public class PlayerController : MonoBehaviour
     {
         //Press LShift to run (doubles the player's speed)
         if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
             speed *= 2.0f;
+            footstepsSFX.clip = runSFX;
+        }
         if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
             speed /= 2.0f;
+            footstepsSFX.clip = walkSFX;
+        }
 
         if (movementEnabled)
         {
@@ -88,11 +97,16 @@ public class PlayerController : MonoBehaviour
             PlayerPrefs.Save();
             screenFade.GetComponent<ScreenFade>().FadeOut(3);
         }
+        else if (other.gameObject.CompareTag("Floor")) //Level 2 landing effect
+        {
+            gm.GetComponent<GameManager>().PlayLandingSound();
+            GameObject.FindGameObjectWithTag("Floor").SetActive(false);
+        }
         else if (other.gameObject.CompareTag("Cages")) //Level 3 insanity increase
         {
             gm.GetComponent<GameManager>().IncreaseInsanityCages(0.2f);
         }
-        else if (other.gameObject.CompareTag("Flowers")) //Level 3 flowers insanity/colliders reset
+        else if (other.gameObject.CompareTag("Flowers")) //Level 3 flowers insanity & colliders reset
         {
             gm.GetComponent<GameManager>().ResetInsanity();
             lvr.GetComponent<Lever>().Reset(true);
