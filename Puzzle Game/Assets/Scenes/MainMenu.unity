@@ -2774,7 +2774,7 @@ MonoBehaviour:
   musicSlider: {fileID: 138818476}
   soundSlider: {fileID: 1690451859}
   musicSource: {fileID: 2074032344}
-  menuSelect: {fileID: 8300000, guid: 7e6943dd953ef17479f7d2afb9353ee6, type: 3}
+  menuSelect: {fileID: 8300000, guid: c2a7b857bb3e28d45be865473c61ecdb, type: 3}
   menuMovement: {fileID: 8300000, guid: 365bb339e0023ee46a8763074ca5c301, type: 3}
 --- !u!4 &1392191085
 Transform:

@@ -27,8 +27,9 @@ public class Lever2 : MonoBehaviour
     Animator anim6;
     Animator lever2;
 
-    private float LeverStart = 0f;
+    private float LeverStart = -1f;
     private float LeverCooldown = 2.5f;
+    private bool NearLever;
 
     void Start()
     {
@@ -43,11 +44,17 @@ public class Lever2 : MonoBehaviour
 
     public void Controller2(bool amount)
     {
-        if (Input.GetKeyDown("f"))
+        NearLever = amount;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown("f") && (NearLever == true))
         {
             if (Time.time > LeverStart + LeverCooldown)
             {
                 LeverStart = Time.time;
+                GameObject.Find("GameManager").GetComponent<GameManager>().PlayLeverSound();
 
                 ColliderTwo.enabled = !ColliderTwo.enabled;
                 ColliderThree.enabled = !ColliderThree.enabled;

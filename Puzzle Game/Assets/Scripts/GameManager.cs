@@ -29,7 +29,10 @@ public class GameManager : MonoBehaviour
     public AudioSource soundSource;
     public AudioClip menuSelect;
     public AudioClip menuMovement;
+    public AudioClip puzzleCorrect;
+    public AudioClip puzzleComplete;
     public AudioClip landingSound;
+    public AudioClip leverSound;
 
     private void Awake()
     {
@@ -66,9 +69,13 @@ public class GameManager : MonoBehaviour
             //... open the trapdoor
             trapdoorRot.GetComponent<Animator>().SetBool("Open", true);
             trapdoorRot.GetComponent<AudioSource>().volume *= PlayerPrefs.GetFloat("SOUND");
-            trapdoorRot.GetComponent<AudioSource>().Play();
+            if (!trapdoorTrigger.activeInHierarchy)
+                trapdoorRot.GetComponent<AudioSource>().Play();
             trapdoorTrigger.gameObject.SetActive(true);
+            soundSource.PlayOneShot(puzzleComplete);
         }
+        else
+            soundSource.PlayOneShot(puzzleCorrect);
     }
     public void DecreasePuzzleCompletion()
     {
@@ -148,9 +155,15 @@ public class GameManager : MonoBehaviour
     }
     */
 
+    //Play sound effects
     public void PlayLandingSound()
     {
         soundSource.PlayOneShot(landingSound);
+    }
+    
+    public void PlayLeverSound()
+    {
+        soundSource.PlayOneShot(leverSound);
     }
 
     //Pause Menu Functions

@@ -26,10 +26,11 @@ public class Lever : MonoBehaviour
     Animator anim5;
     Animator anim6;
     Animator lever1;
-    
-    private float LeverStart = 0f;
+
+    private float LeverStart = -1f;
     private float LeverCooldown = 2.5f;
-    
+    private bool NearLever;
+
     void Start()
     {
         anim1 = CageOne.GetComponent<Animator>();
@@ -42,7 +43,7 @@ public class Lever : MonoBehaviour
     }
 
     // After being in flowers checks if the cage is down and reactives the correct colliders
-    public void Reset(bool amount)  
+    public void Reset(bool amount)
     {
         if ((anim1.GetBool("Rising1") == false))
         {
@@ -73,17 +74,23 @@ public class Lever : MonoBehaviour
     //When F is pressed flip the cages/levers from down to up or vice-versa
     public void Controller1(bool amount)
     {
-        if (Input.GetKeyDown("f"))
+        NearLever = amount;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown("f") && (NearLever == true))
         {
             if (Time.time > LeverStart + LeverCooldown) //add a cooldown to avoid button spamming issues
             {
                 LeverStart = Time.time;
+                GameObject.Find("GameManager").GetComponent<GameManager>().PlayLeverSound();
 
                 ColliderTwo.enabled = !ColliderTwo.enabled;
                 ColliderThree.enabled = !ColliderThree.enabled;
                 ColliderFour.enabled = !ColliderFour.enabled;
 
-                if (lever1.GetBool("Leveron") == true ) //flip lever animation
+                if (lever1.GetBool("Leveron") == true) //flip lever animation
                 {
                     lever1.SetBool("Leveron", false);
                 }
