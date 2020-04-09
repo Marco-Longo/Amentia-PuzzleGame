@@ -26,6 +26,13 @@ public class BoxPuzzleTrigger : MonoBehaviour
             else if (boxRB.velocity.magnitude < 2.0f && boxSlideSFX.isPlaying)
                 boxSlideSFX.Stop();
         }
+
+        //Stop playing the sliding sound when the box falls into the trapdoor
+        if (boxSlideSFX.isPlaying && transform.position.y < 2.3f)
+            boxSlideSFX.Stop();
+        //Destroy the boxes when they fall into the trapdoor
+        if (transform.position.y < -11.0f)
+            gameObject.SetActive(false);
     }
 
     void OnTriggerEnter(Collider other)
