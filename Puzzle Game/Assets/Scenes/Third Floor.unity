@@ -2016,8 +2016,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 524900808}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 110, y: -145, z: -283}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 110, y: -137, z: -271.3}
+  m_LocalScale: {x: 0.94764, y: 0.94764, z: 0.94764}
   m_Children:
   - {fileID: 1668022330}
   - {fileID: 936984252}
@@ -3062,8 +3062,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 784233370}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 110, y: -145, z: -283}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 110, y: -137, z: -271.4}
+  m_LocalScale: {x: 0.94764, y: 0.94764, z: 0.94764}
   m_Children:
   - {fileID: 778583607}
   - {fileID: 1910731195}
@@ -4480,6 +4480,8 @@ MonoBehaviour:
   soundSource: {fileID: 1088894682}
   menuSelect: {fileID: 8300000, guid: c2a7b857bb3e28d45be865473c61ecdb, type: 3}
   menuMovement: {fileID: 8300000, guid: 365bb339e0023ee46a8763074ca5c301, type: 3}
+  puzzleCorrect: {fileID: 0}
+  puzzleComplete: {fileID: 0}
   landingSound: {fileID: 0}
   leverSound: {fileID: 8300000, guid: 73fba48acef43034bb2146f30c155154, type: 3}
 --- !u!1 &1088894681
@@ -5855,8 +5857,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1467514321}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 110, y: -145, z: -283}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 110, y: -137, z: -272.5}
+  m_LocalScale: {x: 0.94764, y: 0.94764, z: 0.94764}
   m_Children:
   - {fileID: 865465883}
   - {fileID: 1183789637}

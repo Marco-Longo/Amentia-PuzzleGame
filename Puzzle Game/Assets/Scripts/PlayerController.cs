@@ -71,8 +71,8 @@ public class PlayerController : MonoBehaviour
             //Play Footsteps SFX
             if (controller.velocity.magnitude > 2.0f && !footstepsSFX.isPlaying)
             {
-                footstepsSFX.volume = Random.Range(0.8f, 1.0f);
-                footstepsSFX.pitch = Random.Range(0.8f, 1.1f);
+                footstepsSFX.volume = Random.Range(0.6f, 0.8f);
+                footstepsSFX.pitch = Random.Range(0.7f, 0.9f);
                 footstepsSFX.Play();
             }
             else if (controller.velocity.magnitude < 2.0f && footstepsSFX.isPlaying)
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Cages")) //Level 3 insanity increase
         {
-            gm.GetComponent<GameManager>().IncreaseInsanityCages(0.2f);
+            gm.GetComponent<GameManager>().IncreaseInsanityCages();
         }
         else if (other.gameObject.CompareTag("Flowers")) //Level 3 flowers insanity & colliders reset
         {
@@ -154,7 +154,6 @@ public class PlayerController : MonoBehaviour
         }
         */
     }
-
 
     private void OnControllerColliderHit(ControllerColliderHit other)
     {

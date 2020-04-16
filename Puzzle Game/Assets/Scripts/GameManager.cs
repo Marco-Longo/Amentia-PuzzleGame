@@ -86,9 +86,7 @@ public class GameManager : MonoBehaviour
     public void IncreaseInsanity(float amount)
     {
         if (insanity < 1.0f)
-        {
-//          inDanger = true;
-//          decayTimer = 0.0f;
+        {  
             insanity += amount;
             insanityMeter.value = insanity;
             insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity - 0.2f);
@@ -113,32 +111,50 @@ public class GameManager : MonoBehaviour
     }
 
     //Cages Insanity Functions
-    public void IncreaseInsanityCages(float amount)
+    public void IncreaseInsanityCages()
     {
-        insanity += amount;
-        insanityMeter.value = insanity;
-        insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity - 0.2f);
+        StartCoroutine(SlowIncrease());
+    }
+
+    private IEnumerator SlowIncrease()
+    {
+        for (int i = 0; i < (20); i++)
+        {
+            insanity += 0.01f;
+            insanityMeter.value = insanity;
+            insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity - 0.2f);
+            yield return new WaitForSeconds(.05f);
+        }
 
         /*
         if (insanity > .9f) //if insanity is too high reset level
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+         Activate the door when a certain amount of insanity is reached
         */
-        //Activate the door when a certain amount of insanity is reached
+
         if (insanity > 0.35f && insanity < 0.45f)
             finalDoor.SetActive(false);
         else
             finalDoor.SetActive(true);
     }
-
     public void ResetInsanity()
     {
         //Flowers set insanity to 0 and close the door
-        insanity = 0.0f;
-        insanityMeter.value = insanity;
-        insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, 0.0f);
+        StartCoroutine(SlowReset());
         finalDoor.SetActive(true);
+    }
+
+    private IEnumerator SlowReset()
+    {
+        while (insanity > 0)
+        {
+            insanity -= 0.01f;
+            insanityMeter.value = insanity;
+            insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity - 0.2f);
+            yield return new WaitForSeconds(.01f);
+        }
     }
 
     private void DecreaseInsanity()
