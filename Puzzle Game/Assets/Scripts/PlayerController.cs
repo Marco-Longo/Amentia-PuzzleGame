@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
             if (controller.velocity.magnitude > 2.0f && !footstepsSFX.isPlaying)
             {
                 footstepsSFX.volume = Random.Range(0.6f, 0.8f);
-                footstepsSFX.pitch = Random.Range(0.7f, 0.9f);
+                footstepsSFX.pitch = Random.Range(0.8f, 1.0f);
                 footstepsSFX.Play();
             }
             else if (controller.velocity.magnitude < 2.0f && footstepsSFX.isPlaying)
