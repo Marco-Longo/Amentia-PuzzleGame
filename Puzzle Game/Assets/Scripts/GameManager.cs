@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject fakeWall;
     public GameObject realDoor;
     public GameObject finalDoor;
+    public GameObject vision;
     public Slider insanityMeter;
     public Image insanityEffect;
 
@@ -47,7 +48,12 @@ public class GameManager : MonoBehaviour
         
         //Initialize insanity indicators
         insanityMeter.value = insanity;
-        insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity - 0.2f);   
+        insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity);
+    }
+
+    private void Start()
+    {
+        vision = GameObject.Find("fakeDoor");
     }
 
     void Update()
@@ -89,7 +95,7 @@ public class GameManager : MonoBehaviour
         {  
             insanity += amount;
             insanityMeter.value = insanity;
-            insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity - 0.2f);
+            insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity);
         }
         if (insanity > 0.5f && !realDoor.activeInHierarchy)
         {
@@ -122,7 +128,7 @@ public class GameManager : MonoBehaviour
         {
             insanity += 0.01f;
             insanityMeter.value = insanity;
-            insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity - 0.2f);
+            insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity);
             yield return new WaitForSeconds(.05f);
         }
 
@@ -134,11 +140,14 @@ public class GameManager : MonoBehaviour
          Activate the door when a certain amount of insanity is reached
         */
 
-        if (insanity > 0.35f && insanity < 0.45f)
+        if (insanity > 0.38f && insanity < 0.42f)
+        {
             finalDoor.SetActive(false);
+        }
         else
             finalDoor.SetActive(true);
     }
+
     public void ResetInsanity()
     {
         //Flowers set insanity to 0 and close the door
@@ -152,7 +161,7 @@ public class GameManager : MonoBehaviour
         {
             insanity -= 0.01f;
             insanityMeter.value = insanity;
-            insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity - 0.2f);
+            insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity);
             yield return new WaitForSeconds(.01f);
         }
     }
