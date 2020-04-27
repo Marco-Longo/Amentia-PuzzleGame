@@ -7,12 +7,15 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     private CharacterController controller;
+    private ArmsController arms;
     private GameObject gm;
     private AudioSource footstepsSFX;
     private GameObject lvr;
     private GameObject lvr2;
     private GameObject lvr3;
     private bool movementEnabled = true;
+    private bool pushingBox = false;
+    private bool running = false;
 
     public float speed = 10.0f;
     public float gravity = 20.0f;
@@ -28,6 +31,7 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         controller = GetComponent<CharacterController>();
+        arms = ArmsController.Instance;
         footstepsSFX = GetComponent<AudioSource>();
         gm = GameObject.Find("GameManager");
         lvr = GameObject.Find("Lever1");
@@ -42,31 +46,43 @@ public class PlayerController : MonoBehaviour
         {
             speed *= 2.0f;
             footstepsSFX.clip = runSFX;
+            running = true;
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             speed /= 2.0f;
             footstepsSFX.clip = walkSFX;
+            running = false;
         }
 
         if (movementEnabled)
         {
-            // Get Horizontal and Vertical Input
+            //Get Horizontal and Vertical Input
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             float verticalInput = Input.GetAxisRaw("Vertical");
 
-            // Calculate the Direction to Move based on the tranform of the Player
+            //Calculate the Direction to Move based on the tranform of the Player
             Vector3 moveDirectionForward = transform.forward * verticalInput;
             Vector3 moveDirectionSide = transform.right * horizontalInput;
 
-            //find the direction
+            //Find the direction
             Vector3 direction = (moveDirectionForward + moveDirectionSide).normalized;
-            //find the distance
+            //Find the distance
             Vector3 distance = direction * speed * Time.deltaTime;
             distance.y -= gravity * Time.deltaTime;
 
-            // Apply Movement to Player
+            //Apply Movement to Player
             controller.Move(distance);
+
+            //Enable/Disable running animation
+            if (running && Mathf.Abs(controller.velocity.magnitude) > 0.0f)
+                arms.ToggleRun(true);
+            else
+                arms.ToggleRun(false);
+
+            //Stop pushing box animation if player is not moving forward
+            if (pushingBox == true && moveDirectionForward.x == 0.0f)
+                arms.ToggleBoxPush(false);
 
             //Play Footsteps SFX
             if (controller.velocity.magnitude > 2.0f && !footstepsSFX.isPlaying)
@@ -188,8 +204,12 @@ public class PlayerController : MonoBehaviour
             //Assist Player Movement
             //...
 
+            arms.ToggleBoxPush(true);
+            pushingBox = true;
             body.velocity = pushPower * -normal;
         }
+        else
+            arms.ToggleBoxPush(false);
     }
 
     public Vector3 GetPosition()

@@ -6,6 +6,7 @@ public class DoorOpener : MonoBehaviour
 {
     private Animator anim;
     private AudioSource doorSFX;
+    private bool pushed = false;
 
     public AudioClip doorOpening;
     public AudioClip doorClosing;
@@ -27,6 +28,12 @@ public class DoorOpener : MonoBehaviour
             else
                 anim.SetBool("Reverse", true);
 
+            if (!pushed)
+            {
+                ArmsController.Instance.ToggleDoorPush(true);
+                pushed = true;
+            }
+            
             doorSFX.clip = doorOpening;
             doorSFX.Play();
         }
@@ -37,6 +44,8 @@ public class DoorOpener : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             anim.SetBool("isOpen", false);
+            ArmsController.Instance.ToggleDoorPush(false);
+            pushed = false;
             doorSFX.clip = doorClosing;
             doorSFX.PlayDelayed(1.5f);
         }
