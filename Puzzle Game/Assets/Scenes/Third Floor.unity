@@ -6655,7 +6655,7 @@ MonoBehaviour:
   puzzleCorrect: {fileID: 0}
   puzzleComplete: {fileID: 0}
   landingSound: {fileID: 0}
-  leverSound: {fileID: 8300000, guid: 73fba48acef43034bb2146f30c155154, type: 3}
+  leverSound: {fileID: 8300000, guid: d319b7ff6c9ffd44793b0c33ca06475b, type: 3}
 --- !u!1 &1085166345
 GameObject:
   m_ObjectHideFlags: 0
