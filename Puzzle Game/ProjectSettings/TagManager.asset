@@ -15,6 +15,7 @@ TagManager:
   - Controller3
   - FadeInDoor
   - Floor
+  - EndGame
   layers:
   - Default
   - TransparentFX

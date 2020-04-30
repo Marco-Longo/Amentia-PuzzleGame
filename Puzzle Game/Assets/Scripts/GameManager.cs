@@ -13,9 +13,11 @@ public class GameManager : MonoBehaviour
     public GameObject fakeWall;
     public GameObject realDoor;
     public GameObject finalDoor;
+    public GameObject endGameTrigger;
     public GameObject vision;
     public Slider insanityMeter;
     public Image insanityEffect;
+    public GameObject deathScreen;
 
     //Box Puzzle
     private int boxPuzzleCompletion = 0;
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour
     public AudioClip puzzleCorrect;
     public AudioClip puzzleComplete;
     public AudioClip landingSound;
+    public AudioClip doorFadeSound;
     public AudioClip leverSound;
 
     private void Awake()
@@ -88,7 +91,7 @@ public class GameManager : MonoBehaviour
         boxPuzzleCompletion--;
     }
 
-    //Monster Insanity Functions
+    //Monster Insanity Functions (Second Level)
     public void IncreaseInsanity(float amount)
     {
         if (insanity < 1.0f)
@@ -100,8 +103,11 @@ public class GameManager : MonoBehaviour
         if (insanity > 0.5f && !realDoor.activeInHierarchy)
         {
             fakeWall.GetComponent<Animator>().SetBool("Insane", true);
+            soundSource.PlayOneShot(doorFadeSound);
             StartCoroutine(DoorFadeIn());
         }
+        if (insanity >= 1.0f) //Death
+            GameOver(); 
     }
 
     private IEnumerator DoorFadeIn()
@@ -116,7 +122,7 @@ public class GameManager : MonoBehaviour
         realDoor.GetComponent<BoxCollider>().enabled = true;
     }
 
-    //Cages Insanity Functions
+    //Cages Insanity Functions (Third Level)
     public void IncreaseInsanityCages()
     {
         StartCoroutine(SlowIncrease());
@@ -124,7 +130,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SlowIncrease()
     {
-        for (int i = 0; i < (20); i++)
+        for (int i = 0; i < 20; i++)
         {
             insanity += 0.01f;
             insanityMeter.value = insanity;
@@ -132,20 +138,19 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(.05f);
         }
 
-        /*
-        if (insanity > .9f) //if insanity is too high reset level
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-         Activate the door when a certain amount of insanity is reached
-        */
-
-        if (insanity > 0.38f && insanity < 0.42f)
+        if (insanity > 0.38f && insanity < 0.42f) //Puzzle completed
         {
             finalDoor.SetActive(false);
+            endGameTrigger.SetActive(true);
         }
         else
+        {
             finalDoor.SetActive(true);
+            endGameTrigger.SetActive(false);
+        }
+
+        if (insanity >= 1.0f) //Death
+            GameOver();
     }
 
     public void ResetInsanity()
@@ -162,8 +167,17 @@ public class GameManager : MonoBehaviour
             insanity -= 0.01f;
             insanityMeter.value = insanity;
             insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity);
-            yield return new WaitForSeconds(.01f);
+            yield return new WaitForSeconds(0.01f);
         }
+    }
+
+    private void GameOver()
+    {
+        //Play death sound...
+        Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        deathScreen.SetActive(true);
     }
 
     private void DecreaseInsanity()

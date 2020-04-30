@@ -72,26 +72,32 @@ public class Lever3 : MonoBehaviour
                 if (!ColliderThree.enabled)
                 {
                     anim3.SetBool("Rising3", true);
+                    CageThree.transform.GetChild(1).transform.GetChild(1).gameObject.SetActive(false);
                 }
                 if (ColliderThree.enabled)
                 {
                     anim3.SetBool("Rising3", false);
+                    CageThree.transform.GetChild(1).transform.GetChild(1).gameObject.SetActive(true);
                 }
                 if (!ColliderFive.enabled)
                 {
                     anim5.SetBool("Rising5", true);
+                    CageFive.transform.GetChild(1).transform.GetChild(1).gameObject.SetActive(false);
                 }
                 if (ColliderFive.enabled)
                 {
                     anim5.SetBool("Rising5", false);
+                    CageFive.transform.GetChild(1).transform.GetChild(1).gameObject.SetActive(true);
                 }
                 if (!ColliderSix.enabled)
                 {
                     anim6.SetBool("Rising6", true);
+                    CageSix.transform.GetChild(1).transform.GetChild(1).gameObject.SetActive(false);
                 }
                 if (ColliderSix.enabled)
                 {
                     anim6.SetBool("Rising6", false);
+                    CageSix.transform.GetChild(1).transform.GetChild(1).gameObject.SetActive(true);
                 }
             }
         }
