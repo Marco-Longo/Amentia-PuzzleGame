@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Flowers")) //Level 3 flowers insanity & colliders reset
         {
-            gm.GetComponent<GameManager>().ResetInsanity();
+            gm.GetComponent<GameManager>().ResetInsanity(other.gameObject);
             lvr.GetComponent<Lever>().Reset(true);
         }
         else if (other.gameObject.CompareTag("Controller1")) //Level 3 levers activation when within collider
@@ -162,7 +162,6 @@ public class PlayerController : MonoBehaviour
         {
             lvr3.GetComponent<Lever3>().Controller3(false);
         }
-
         /*
         if (other.gameObject.CompareTag("Monster"))
         {

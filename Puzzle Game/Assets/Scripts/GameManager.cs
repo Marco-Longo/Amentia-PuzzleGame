@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject trapdoorTrigger;
     public GameObject fakeWall;
     public GameObject realDoor;
-    public GameObject finalDoor;
+    public Collider finalDoor;
     public GameObject endGameTrigger;
     public GameObject vision;
     public Slider insanityMeter;
@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     public AudioClip landingSound;
     public AudioClip doorFadeSound;
     public AudioClip leverSound;
+    public AudioClip gameOverSound;
 
     private void Awake()
     {
@@ -57,6 +58,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         vision = GameObject.Find("fakeDoor");
+       //finalDoor = GetComponent<MeshCollider>();
     }
 
     void Update()
@@ -140,12 +142,12 @@ public class GameManager : MonoBehaviour
 
         if (insanity > 0.38f && insanity < 0.42f) //Puzzle completed
         {
-            finalDoor.SetActive(false);
+            finalDoor.enabled = (false);
             endGameTrigger.SetActive(true);
         }
         else
         {
-            finalDoor.SetActive(true);
+            finalDoor.enabled = (true);
             endGameTrigger.SetActive(false);
         }
 
@@ -153,11 +155,17 @@ public class GameManager : MonoBehaviour
             GameOver();
     }
 
-    public void ResetInsanity()
+    public void ResetInsanity(GameObject flowers)
     {
+        if (insanity <= 0)
+            return;
+
+        //Play flowers' sound effect
+        flowers.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("SOUND");
+        flowers.GetComponent<AudioSource>().Play();
         //Flowers set insanity to 0 and close the door
         StartCoroutine(SlowReset());
-        finalDoor.SetActive(true);
+        finalDoor.enabled = (true);
     }
 
     private IEnumerator SlowReset()
@@ -173,7 +181,7 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        //Play death sound...
+        soundSource.PlayOneShot(gameOverSound);
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
