@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     public GameObject realDoor;
     public Collider finalDoor;
     public GameObject endGameTrigger;
-    public GameObject vision;
     public Slider insanityMeter;
     public Image insanityEffect;
     public GameObject deathScreen;
@@ -38,6 +37,7 @@ public class GameManager : MonoBehaviour
     public AudioClip doorFadeSound;
     public AudioClip leverSound;
     public AudioClip gameOverSound;
+    public AudioClip mainThemeSound;
 
     private void Awake()
     {
@@ -53,12 +53,6 @@ public class GameManager : MonoBehaviour
         //Initialize insanity indicators
         insanityMeter.value = insanity;
         insanityEffect.color = new Color(insanityEffect.color.r, insanityEffect.color.g, insanityEffect.color.b, insanity);
-    }
-
-    private void Start()
-    {
-        vision = GameObject.Find("fakeDoor");
-       //finalDoor = GetComponent<MeshCollider>();
     }
 
     void Update()
@@ -235,6 +229,15 @@ public class GameManager : MonoBehaviour
         soundSource.PlayOneShot(menuMovement);
         Time.timeScale = 1;
         insanity = 0; //Since insanity is a static variable, it needs to be reset at every restart
+        AudioManager.Instance.GetComponent<AudioSource>().Stop();
+        SceneManager.LoadScene("MainMenu");
+    }
+    public void QuitEndGame()
+    {
+        soundSource.PlayOneShot(menuMovement);
+        Time.timeScale = 1;
+        insanity = 0; //Since insanity is a static variable, it needs to be reset at every restart
+        AudioManager.Instance.GetComponent<AudioSource>().clip = mainThemeSound;
         AudioManager.Instance.GetComponent<AudioSource>().Stop();
         SceneManager.LoadScene("MainMenu");
     }
