@@ -19,6 +19,8 @@ public class Lever3 : MonoBehaviour
     public Collider ColliderFive;
     public Collider ColliderSix;
 
+    public GameObject interactionGUI;
+
     Animator anim1;
     Animator anim2;
     Animator anim3;
@@ -45,6 +47,7 @@ public class Lever3 : MonoBehaviour
     public void Controller3(bool amount)
     {
         NearLever = amount;
+        interactionGUI.SetActive(amount);
     }
 
     private void Update()
