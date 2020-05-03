@@ -10629,6 +10629,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2920563006214473734, guid: 6f8667c174db531498c76513e4527b91,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 16.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920563006214473737, guid: 6f8667c174db531498c76513e4527b91,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920563006214473737, guid: 6f8667c174db531498c76513e4527b91,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920563006214473737, guid: 6f8667c174db531498c76513e4527b91,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: -0.003787879
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920563006214473737, guid: 6f8667c174db531498c76513e4527b91,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920563006214473737, guid: 6f8667c174db531498c76513e4527b91,
+        type: 3}
+      propertyPath: m_AreaSize.x
+      value: 11.736553
+      objectReference: {fileID: 0}
     - target: {fileID: 6603967565375451517, guid: 6f8667c174db531498c76513e4527b91,
         type: 3}
       propertyPath: m_Name

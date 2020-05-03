@@ -52,7 +52,7 @@ public class Lever3 : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown("f") && (NearLever == true))
+        if (Input.GetKeyDown("f") && (NearLever == true) && Time.timeScale != 0)
         {
             if (Time.time > LeverStart + LeverCooldown)
             {

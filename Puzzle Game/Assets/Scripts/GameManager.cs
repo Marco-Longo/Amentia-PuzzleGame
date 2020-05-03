@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public Slider insanityMeter;
     public Image insanityEffect;
     public GameObject deathScreen;
+    private bool playerIsAlive = true;
 
     //Box Puzzle
     private int boxPuzzleCompletion = 0;
@@ -57,8 +58,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            OpenMenu();
+        if (Input.GetKeyDown(KeyCode.Escape) && playerIsAlive)
+            ToggleMenu();
 
 //      decayTimer += Time.deltaTime;
 //      if (!inDanger && insanity > 0.0f && decayTimer > 3.0f)
@@ -180,6 +181,12 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         deathScreen.SetActive(true);
+        playerIsAlive = false;
+    }
+
+    public void DisableMenu()
+    {
+        playerIsAlive = false;
     }
 
     private void DecreaseInsanity()
@@ -208,13 +215,23 @@ public class GameManager : MonoBehaviour
     }
 
     //Pause Menu Functions
-    public void OpenMenu()
+    public void ToggleMenu()
     {
         soundSource.PlayOneShot(menuMovement);
-        Time.timeScale = 0;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        pauseMenu.gameObject.SetActive(true);
+        if (pauseMenu.gameObject.activeInHierarchy)
+        {
+            Time.timeScale = 1;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            pauseMenu.gameObject.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            pauseMenu.gameObject.SetActive(true);
+        }
     }
     public void ResumeGame()
     {

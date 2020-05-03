@@ -23,6 +23,7 @@ public class EndGame : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             endGameScreen.SetActive(true);
+            GameObject.Find("GameManager").GetComponent<GameManager>().DisableMenu();
         }
     }
 }
