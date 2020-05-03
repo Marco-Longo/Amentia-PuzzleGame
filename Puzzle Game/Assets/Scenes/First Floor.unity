@@ -2165,7 +2165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 0.56078434}
+  m_Color: {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 0.8235294}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -13571,8 +13571,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1131839468263748599}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.06, y: -16.28, z: -0.06}
-  m_LocalScale: {x: 911.3183, y: 54.12583, z: 928.57336}
+  m_LocalPosition: {x: -0.06, y: -34.156, z: -0.06}
+  m_LocalScale: {x: 911.3183, y: 115.07151, z: 928.57336}
   m_Children: []
   m_Father: {fileID: 7548153181576233054}
   m_RootOrder: 0

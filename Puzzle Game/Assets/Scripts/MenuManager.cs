@@ -9,6 +9,7 @@ public class MenuManager : MonoBehaviour
     public RectTransform mainMenu;
     public RectTransform controlsMenu;
     public RectTransform optionsMenu;
+    public RectTransform creditsMenu;
     public Slider musicSlider;
     public Slider soundSlider;
 
@@ -112,6 +113,14 @@ public class MenuManager : MonoBehaviour
         mainMenu.gameObject.SetActive(false);
         optionsMenu.gameObject.SetActive(true);
     }
+    
+    //Load the credits tab in the main menu
+    public void ShowCredits()
+    {
+        soundSource.PlayOneShot(menuSelect);
+        mainMenu.gameObject.SetActive(false);
+        creditsMenu.gameObject.SetActive(true);
+    }
 
     //Load the main menu screen
     public void ShowMenu()
@@ -119,6 +128,7 @@ public class MenuManager : MonoBehaviour
         soundSource.PlayOneShot(menuMovement);
         controlsMenu.gameObject.SetActive(false);
         optionsMenu.gameObject.SetActive(false);
+        creditsMenu.gameObject.SetActive(false);
         mainMenu.gameObject.SetActive(true);
     }
 
