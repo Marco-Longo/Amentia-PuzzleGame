@@ -14,7 +14,7 @@ public class DialogueSystem: MonoBehaviour
 
     public float letterDelay = 1.0f;
     public float letterMultiplier = 1.2f;
-    public KeyCode DialogueInput = KeyCode.Insert;
+    public KeyCode DialogueInput;
 
     public string Names;
     public string[] dialogueLines;
